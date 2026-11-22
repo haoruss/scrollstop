@@ -19,7 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 const PLATEFORMES = {
   reels: {
     nom: 'Instagram Reels',
-    hashtags: ['#reels', '#reelsinstagram', '#explore'],
     conseils: [
       'Format 9:16 (1080 × 1920). Garde les textes hors des 20 % du bas, cachés par la légende et les boutons.',
       'Choisis une image de couverture lisible : elle apparaît sur ta grille de profil.',
@@ -28,7 +27,6 @@ const PLATEFORMES = {
   },
   tiktok: {
     nom: 'TikTok',
-    hashtags: ['#pourtoi', '#fyp', '#tiktokfrance'],
     conseils: [
       'Format 9:16. Le spectateur décide en moins d\'une seconde : aucune image d\'intro, aucun logo au début.',
       'Prends le son directement dans la bibliothèque TikTok pour profiter des tendances.',
@@ -37,7 +35,6 @@ const PLATEFORMES = {
   },
   shorts: {
     nom: 'YouTube Shorts',
-    hashtags: ['#shorts', '#youtubeshorts', '#short'],
     conseils: [
       'Format 9:16, moins de 60 secondes pour être sûr d\'être classé en Short.',
       'Fais en sorte que la fin s\'enchaîne avec le début : la boucle augmente la durée de visionnage.',
@@ -227,6 +224,41 @@ const ETAPES = {
   }
 };
 
+// Version « récit » des étapes, pour les tons fun, motivant et inspirant
+// (les étapes numérotées 1, 2, 3 ne servent que pour le ton pédagogique)
+const ETAPES_RECIT = {
+  contexte: {
+    nom: 'Le décor',
+    aMontrer: 'Le début de {sujet} : le lieu, les gens, l\'ambiance avant que ça bouge.',
+    texteEcran: 'Ça partait tranquille…',
+    montage: 'Change d\'angle par rapport à l\'accroche pour relancer l\'attention.'
+  },
+  coeur: {
+    nom: 'Le moment fort',
+    aMontrer: 'Le meilleur moment de {sujet} : une action, une réaction, un fou rire.',
+    texteEcran: 'Et là… 😳',
+    montage: 'Arrêt sur image ou ralenti sur le geste, avec un bruitage.'
+  },
+  point1: {
+    nom: 'Ça démarre',
+    aMontrer: 'On entre dans l\'action : les premières images de {sujet}.',
+    texteEcran: 'C\'est parti 🔥',
+    montage: 'Plans courts, un par seconde environ, pour lancer le rythme.'
+  },
+  point2: {
+    nom: 'Ça se corse',
+    aMontrer: 'Le passage difficile ou drôle : imprévu, effort, chute, fatigue.',
+    texteEcran: 'Et là, ça se complique…',
+    montage: 'Arrêt sur image ou ralenti sur le moment clé, avec un bruitage.'
+  },
+  point3: {
+    nom: 'Le pic',
+    aMontrer: 'Le moment que tout le monde retiendra de {sujet}.',
+    texteEcran: 'Le moment que personne n\'oubliera',
+    montage: 'Accélère juste avant, puis laisse respirer le plan.'
+  }
+};
+
 // Mots ignorés pour fabriquer les hashtags à partir du sujet
 const MOTS_VIDES = ['le', 'la', 'les', 'un', 'une', 'des', 'de', 'du', 'et', 'en', 'pour', 'avec',
   'sans', 'mon', 'ma', 'mes', 'ton', 'ta', 'tes', 'son', 'sa', 'ses', 'sur', 'dans', 'au', 'aux', 'comment', 'faire'];
@@ -240,7 +272,13 @@ function choisir(liste) {
 }
 
 function remplir(texte, sujet, duree) {
-  const resultat = texte.replace(/\{sujet\}/g, sujet).replace(/\{duree\}/g, duree);
+  const resultat = texte.replace(/\{sujet\}/g, sujet).replace(/\{duree\}/g, duree)
+    // contractions du français : « de le » → « du », « de une » → « d'une »…
+    .replace(/\bde le /gi, 'du ')
+    .replace(/\bde les /gi, 'des ')
+    .replace(/(^|\s)à le /gi, '$1au ')
+    .replace(/(^|\s)à les /gi, '$1aux ')
+    .replace(/\b(de|que) ([aeiouyéèêàâîô])/gi, (m, mot, lettre) => mot.slice(0, -1) + '\'' + lettre);
   return resultat.charAt(0).toUpperCase() + resultat.slice(1); // majuscule en début de phrase
 }
 
@@ -267,7 +305,7 @@ function genererPlan({ sujet, plateforme, duree, ton }) {
   const cta = choisir(t.cta);
 
   const segments = STRUCTURES[duree].map(([debut, fin, type]) => {
-    const etape = ETAPES[type];
+    const etape = (ton !== 'pedagogique' && ETAPES_RECIT[type]) || ETAPES[type];
     let texteEcran = etape.texteEcran || '';
     let montage = etape.montage;
     if (type === 'accroche') { texteEcran = accroche; montage = visuelAccroche; }
@@ -283,7 +321,8 @@ function genererPlan({ sujet, plateforme, duree, ton }) {
     };
   });
 
-  const hashtags = [...new Set([...hashtagsDuSujet(sujet), ...t.hashtags, ...p.hashtags])];
+  // 5 hashtags précis maximum (les génériques comme #reels ne servent à rien)
+  const hashtags = [...new Set([...hashtagsDuSujet(sujet), ...t.hashtags])].slice(0, 5);
 
   return {
     sujet,
