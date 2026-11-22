@@ -1,0 +1,16 @@
+{
+  "name": "scrollstop",
+  "version": "1.0.0",
+  "description": "ScrollStop : génère un plan de montage prêt à suivre pour Reels, TikTok et Shorts.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "license": "MIT"
+}
