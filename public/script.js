@@ -62,6 +62,16 @@ async function generer() {
 
 function afficherPlan(plan) {
   document.getElementById('accroche').textContent = plan.accroche;
+
+  // Type d'accroche + geste de montage de la 1re image (créé une seule fois)
+  let visuel = document.getElementById('visuel');
+  if (!visuel) {
+    visuel = creer('p', 'visuel');
+    visuel.id = 'visuel';
+    document.getElementById('accroche').after(visuel);
+  }
+  visuel.replaceChildren(creer('strong', '', plan.typeAccroche + ' · À l\'image : '), plan.visuelAccroche);
+
   document.getElementById('infos').textContent =
     `${plan.plateforme} · ${plan.duree} secondes · ton ${plan.ton.toLowerCase()} · sujet : ${plan.sujet}`;
   document.getElementById('rythme').textContent = 'Rythme : ' + plan.rythme;
@@ -100,8 +110,9 @@ function planEnTexte(plan) {
     `Sujet : ${plan.sujet}`,
     `${plan.plateforme} · ${plan.duree} s · ton ${plan.ton.toLowerCase()}`,
     '',
-    'ACCROCHE',
+    `ACCROCHE (${plan.typeAccroche})`,
     plan.accroche,
+    `À l'image : ${plan.visuelAccroche}`,
     '',
     'DÉCOUPAGE',
     `Rythme : ${plan.rythme}`,
