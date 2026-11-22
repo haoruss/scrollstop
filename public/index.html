@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollStop — Ton plan de montage en un clic</title>
+  <meta name="description" content="Décris ta vidéo, ScrollStop te donne un plan de montage prêt à suivre pour Reels, TikTok et Shorts.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✋</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="entete">
+    <div class="logo">Scroll<span>Stop</span></div>
+    <h1>Ton plan de montage,<br>prêt en un clic.</h1>
+    <p class="sous-titre">Décris ta vidéo. Récupère l'accroche, le découpage seconde par seconde, le son et la légende.</p>
+  </header>
+
+  <main class="conteneur">
+    <form id="formulaire" class="carte" novalidate>
+      <label class="champ">
+        <span>Le sujet de ta vidéo</span>
+        <input type="text" id="sujet" name="sujet" maxlength="80" required
+               placeholder="ex. ma routine du matin, recette de pâtes, trail en montagne">
+      </label>
+
+      <div class="ligne">
+        <label class="champ">
+          <span>Plateforme</span>
+          <select id="plateforme" name="plateforme">
+            <option value="reels">Instagram Reels</option>
+            <option value="tiktok">TikTok</option>
+            <option value="shorts">YouTube Shorts</option>
+          </select>
+        </label>
+
+        <label class="champ">
+          <span>Ton</span>
+          <select id="ton" name="ton">
+            <option value="fun">Fun</option>
+            <option value="motivant">Motivant</option>
+            <option value="pedagogique">Pédagogique</option>
+            <option value="inspirant">Inspirant</option>
+          </select>
+        </label>
+      </div>
+
+      <fieldset class="champ">
+        <legend>Durée</legend>
+        <div class="choix-duree">
+          <label><input type="radio" name="duree" value="15"><span>15 s</span></label>
+          <label><input type="radio" name="duree" value="30" checked><span>30 s</span></label>
+          <label><input type="radio" name="duree" value="60"><span>60 s</span></label>
+        </div>
+      </fieldset>
+
+      <p id="erreur" class="erreur" role="alert" hidden></p>
+
+      <button type="submit" id="bouton-generer" class="bouton-principal">Générer mon plan</button>
+    </form>
+
+    <section id="resultat" class="resultat" hidden aria-live="polite">
+      <div class="barre-actions">
+        <h2>Ton plan</h2>
+        <div class="actions">
+          <button type="button" id="bouton-copier" class="bouton-secondaire">Copier</button>
+          <button type="button" id="bouton-telecharger" class="bouton-secondaire">Télécharger (.txt)</button>
+          <button type="button" id="bouton-autre" class="bouton-secondaire">Autre version</button>
+        </div>
+      </div>
+
+      <div class="carte carte-accroche">
+        <p class="etiquette">Accroche</p>
+        <p id="accroche" class="accroche"></p>
+        <p id="infos" class="infos"></p>
+      </div>
+
+      <div class="carte">
+        <p class="etiquette">Découpage seconde par seconde</p>
+        <p id="rythme" class="rythme"></p>
+        <ol id="segments" class="segments"></ol>
+      </div>
+
+      <div class="grille">
+        <div class="carte">
+          <p class="etiquette">Son</p>
+          <p id="son"></p>
+        </div>
+        <div class="carte">
+          <p class="etiquette">Légende</p>
+          <p id="legende" class="legende"></p>
+          <p id="hashtags" class="hashtags"></p>
+        </div>
+      </div>
+
+      <div class="carte">
+        <p class="etiquette">Conseils plateforme</p>
+        <ul id="conseils" class="conseils"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pied">ScrollStop · fait pour les créateurs qui veulent arrêter le scroll</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
