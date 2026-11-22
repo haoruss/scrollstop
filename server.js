@@ -49,11 +49,20 @@ const PLATEFORMES = {
 const TONS = {
   fun: {
     nom: 'Fun',
+    // Chaque accroche = une phrase + un type + le geste de montage de la 1re image
     accroches: [
-      'POV : tu découvres {sujet} pour la première fois 😅',
-      'Personne ne parle de ce côté de {sujet}…',
-      'J\'ai testé {sujet} pour que tu n\'aies pas à le faire 🙃',
-      'Moi qui pensais tout savoir sur {sujet} 💀'
+      { type: 'Relatable', texte: 'POV : tu te lances dans {sujet} sans rien préparer 😅',
+        visuel: 'Commence en plein chaos, caméra à l\'épaule, aucune mise en place.' },
+      { type: 'Curiosité', texte: 'Personne ne m\'avait prévenu pour {sujet}…',
+        visuel: 'Gros plan sur ta tête déçue, puis zoom arrière brutal qui révèle la scène.' },
+      { type: 'Interruption', texte: 'Stop. Avant de faire {sujet}, regarde ça.',
+        visuel: 'Ta main couvre l\'objectif puis s\'écarte d\'un coup, avec un bruitage « pop ».' },
+      { type: 'Contraste', texte: '{sujet} : ce que j\'imaginais vs la réalité 💀',
+        visuel: 'Écran coupé en deux, version rêvée à gauche, vraie version à droite.' },
+      { type: 'Test', texte: 'J\'ai testé {sujet} pour que tu n\'aies pas à le faire 🙃',
+        visuel: 'Ouvre sur la fin (le raté ou la réussite) avec « RÉSULTAT ? », puis retour au début.' },
+      { type: 'Défi', texte: 'Je te parie que tu ne tiens pas {duree} secondes sans rire 😂',
+        visuel: 'Un chrono s\'affiche et démarre dès la toute première image.' }
     ],
     rythme: 'Coupes rapides (environ 1 plan par seconde), petits zooms punchy, bruitages sur les gags.',
     son: 'Un son tendance humoristique, ou une musique légère et rythmée. Ajoute des bruitages (whoosh, pop) sur les coupes.',
@@ -72,10 +81,18 @@ const TONS = {
   motivant: {
     nom: 'Motivant',
     accroches: [
-      'Si tu galères avec {sujet}, regarde ça jusqu\'au bout.',
-      'Il y a un an, je ne savais rien de {sujet}.',
-      'Arrête de remettre {sujet} à demain.',
-      'Ce qui sépare ceux qui réussissent {sujet} des autres 👇'
+      { type: 'Avant / après', texte: 'Jour 1 vs jour [X] de {sujet}.',
+        visuel: 'Écran partagé dès la 1re image, le « après » se révèle par un balayage. Remplace [X] par ton vrai chiffre.' },
+      { type: 'Relatable', texte: 'Si tu galères avec {sujet}, cette vidéo est pour toi.',
+        visuel: 'Plan serré, regard caméra, silence sur la phrase, puis le beat démarre juste après.' },
+      { type: 'Interruption', texte: 'Arrête de remettre {sujet} à demain.',
+        visuel: 'Un geste sec (objet posé fort, porte qui claque) : le bruit sert de réveil.' },
+      { type: 'Curiosité', texte: 'Ce que personne ne te dit quand tu débutes {sujet}.',
+        visuel: 'Travelling avant rapide vers ton visage pendant la phrase.' },
+      { type: 'Transformation', texte: 'Il y a un an, je n\'aurais jamais cru réussir {sujet}.',
+        visuel: 'Ouvre sur ta plus belle image du résultat, puis flash vers une vieille vidéo de toi.' },
+      { type: 'Valeur', texte: 'La vraie différence entre ceux qui réussissent {sujet} et les autres 👇',
+        visuel: '3 plans d\'action très courts (moins d\'1 s chacun) calés sur le beat avant la phrase.' }
     ],
     rythme: 'Coupes calées sur le beat de la musique, accélération progressive jusqu\'au moment fort.',
     son: 'Un beat énergique (120 à 140 BPM) avec un drop placé pile au moment du résultat. Voix off claire et posée par-dessus.',
@@ -94,10 +111,18 @@ const TONS = {
   pedagogique: {
     nom: 'Pédagogique',
     accroches: [
-      '3 erreurs que tout le monde fait avec {sujet}',
-      '{sujet} expliqué en {duree} secondes ⏱️',
-      'Le secret de {sujet} que personne ne t\'explique',
-      'Tu fais sûrement {sujet} de travers. Voilà pourquoi.'
+      { type: 'Erreurs', texte: '3 erreurs que tout le monde fait avec {sujet}',
+        visuel: 'Gros « ❌ » rouge sur un plan de l\'erreur n°1, dès la première image.' },
+      { type: 'Valeur', texte: '{sujet} expliqué en {duree} secondes ⏱️',
+        visuel: 'Chrono en haut de l\'écran qui tourne pendant toute la vidéo.' },
+      { type: 'Controverse', texte: 'Tu fais sûrement {sujet} de travers. Voilà pourquoi.',
+        visuel: 'Montre directement le mauvais geste en gros plan, entouré d\'un cercle rouge.' },
+      { type: 'Curiosité', texte: 'L\'astuce de {sujet} que j\'aurais aimé connaître plus tôt',
+        visuel: 'Gros plan extrême sur le détail, puis zoom arrière qui révèle le contexte.' },
+      { type: 'Contraste', texte: 'Arrête de faire {sujet} comme ça. Fais plutôt ça.',
+        visuel: 'Mauvaise méthode barrée, puis coupe sèche sur la bonne pile sur le mot « ça ».' },
+      { type: 'Valeur', texte: 'Si tu ne retiens qu\'une chose sur {sujet}, c\'est celle-là.',
+        visuel: 'Le texte apparaît mot par mot, synchronisé avec ta voix.' }
     ],
     rythme: 'Un plan toutes les 2 à 3 secondes, textes courts et bien lisibles, flèches ou cercles pour montrer les détails.',
     son: 'Une musique lo-fi ou instrumentale discrète, volume bas : la voix off reste au premier plan.',
@@ -116,10 +141,18 @@ const TONS = {
   inspirant: {
     nom: 'Inspirant',
     accroches: [
-      'Ce que {sujet} m\'a appris sur moi-même.',
-      'Un jour, tout a changé grâce à {sujet}.',
-      'Et si {sujet} était la réponse que tu cherches ?',
-      'Personne ne m\'a cru quand j\'ai commencé {sujet}.'
+      { type: 'Émotion', texte: 'Ce que {sujet} m\'a appris sur moi-même.',
+        visuel: 'Plan large et lent, silhouette de dos, le texte apparaît en fondu.' },
+      { type: 'Histoire', texte: 'Personne ne m\'a cru quand j\'ai commencé {sujet}.',
+        visuel: 'Ouvre sur un moment de doute au ralenti, sans musique les 2 premières secondes.' },
+      { type: 'Transformation', texte: 'Un jour, tout a basculé grâce à {sujet}.',
+        visuel: 'Image du « avant » qui se fige, puis flash blanc vers le « après ».' },
+      { type: 'Question', texte: 'Et si {sujet} était exactement ce qu\'il te manquait ?',
+        visuel: 'Regard caméra très proche, voix basse, une seule phrase.' },
+      { type: 'Histoire', texte: 'J\'ai failli abandonner {sujet}. Heureusement que non.',
+        visuel: 'Ralenti sur l\'effort (souffle, mains), le son de la respiration au premier plan.' },
+      { type: 'Boucle ouverte', texte: 'Regarde jusqu\'au bout, la fin me donne encore des frissons.',
+        visuel: '1 seconde du moment final, puis retour au début avec « 3 mois plus tôt… ».' }
     ],
     rythme: 'Plans plus longs (3 à 4 secondes), transitions douces, ralentis sur les moments forts.',
     son: 'Piano ou cordes qui montent en intensité, avec un moment de silence juste avant la phrase clé.',
@@ -148,8 +181,8 @@ const STRUCTURES = {
 const ETAPES = {
   accroche: {
     nom: 'Accroche',
-    aMontrer: 'Plan serré sur ton visage ou sur l\'action la plus forte liée à {sujet}. Commence directement, sans « Salut tout le monde ».',
-    montage: 'Le texte apparaît dès la toute première image. Léger zoom avant pour donner de l\'énergie.'
+    aMontrer: 'L\'action la plus forte liée à {sujet}. Commence directement : pas de « Salut tout le monde », pas de logo, pas de « Donc voilà ».',
+    montage: '' // remplacé par le geste de montage de l'accroche choisie
   },
   contexte: {
     nom: 'Contexte',
@@ -207,7 +240,8 @@ function choisir(liste) {
 }
 
 function remplir(texte, sujet, duree) {
-  return texte.replace(/\{sujet\}/g, sujet).replace(/\{duree\}/g, duree);
+  const resultat = texte.replace(/\{sujet\}/g, sujet).replace(/\{duree\}/g, duree);
+  return resultat.charAt(0).toUpperCase() + resultat.slice(1); // majuscule en début de phrase
 }
 
 function hashtagsDuSujet(sujet) {
@@ -227,13 +261,16 @@ function hashtagsDuSujet(sujet) {
 function genererPlan({ sujet, plateforme, duree, ton }) {
   const p = PLATEFORMES[plateforme];
   const t = TONS[ton];
-  const accroche = remplir(choisir(t.accroches), sujet, duree);
+  const a = choisir(t.accroches);
+  const accroche = remplir(a.texte, sujet, duree);
+  const visuelAccroche = a.visuel + ' Texte à l\'écran dès la 1re image : beaucoup regardent sans le son.';
   const cta = choisir(t.cta);
 
   const segments = STRUCTURES[duree].map(([debut, fin, type]) => {
     const etape = ETAPES[type];
     let texteEcran = etape.texteEcran || '';
-    if (type === 'accroche') texteEcran = accroche;
+    let montage = etape.montage;
+    if (type === 'accroche') { texteEcran = accroche; montage = visuelAccroche; }
     if (type === 'cta') texteEcran = cta;
 
     return {
@@ -242,7 +279,7 @@ function genererPlan({ sujet, plateforme, duree, ton }) {
       etape: etape.nom,
       aMontrer: remplir(etape.aMontrer, sujet, duree),
       texteEcran,
-      montage: etape.montage
+      montage
     };
   });
 
@@ -254,6 +291,8 @@ function genererPlan({ sujet, plateforme, duree, ton }) {
     duree,
     ton: t.nom,
     accroche,
+    typeAccroche: a.type,
+    visuelAccroche: a.visuel,
     rythme: t.rythme,
     segments,
     son: t.son,
