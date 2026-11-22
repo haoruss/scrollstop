@@ -89,6 +89,12 @@ input[type="text"]:focus, select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-clair);
 }
+.aide {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--texte-doux);
+}
 .ligne {
   display: grid;
   grid-template-columns: 1fr 1fr;
